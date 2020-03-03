@@ -23,36 +23,19 @@ Operator::Operator(string filename){
 
 void Operator::printCommands() {
   cout << "Please choose one of the following commands:\n\n";
-  cout << "1-  IsFull\n";
-  cout << "2-  AddMovie\n";
-  cout << "3-  RemoveMovie\n";
-  cout << "4-  Leaf\n";
-  cout << "5-  PrintLeaves\n";
-  cout << "6-  PrintTreeHeight\n";
-  cout << "7-  Preorder\n";
-  cout << "8-  Postorder\n";
-  cout << "9-  Inorder\n";
-  cout << "10- Levelorder\n";
-  cout << "11- Exit\n\n> ";
-}
-
-void Operator::parseTitle(string parse) {
-  tagline = "\0";
-
-  for (int i = 0; i < parse.length(); i++) {
-    if (parse.at(i) < parse.length() - 1 && parse.at(i) == ',')
-      tagline = tagline + parse.at(i);
-    else {
-      if (parse.at(i) == ',')
-        tagline = tagline;
-      else
-        tagline = tagline + parse.at(i);
-    }
-  }
+  cout << "1. AddItem\n";
+  cout << "2. DeleteItem\n";
+  cout << "3. InorderSuccessor\n";
+  cout << "4. Levelorder\n";
+  cout << "5. SpiralLevelOrder\n";
+  cout << "6. LeftSideView\n";
+  cout << "7. RightSideView\n";
+  cout << "8. KthSmallestItem\n";
+  cout << "9. Exit\n\n> ";
 }
 
 void Operator::run() {
-  cout << "\nWelcome to the Interactive Hash Table Program!\n\n";
+  cout << "\nWelcome to the Interactive Binary Search Tree Program!\n\n";
   ifstream inFile;
 
   //Open File.
@@ -63,19 +46,15 @@ void Operator::run() {
   } else {
     int RatingInputFailures = 0;
     while (!inFile.eof()) {
-      inFile >> tagline >> stars;
+      inFile >> input
 
       if(inFile.fail()) {
         inFile.clear();
         inFile.ignore(numeric_limits<streamsize>::max(),'\n');
         RatingInputFailures++;
       } else {
-        parseTitle(tagline);
-        review = stof(stars);
-
-        if(!IMDB.isEmpty()) {
-          newMovie = new Movie(tagline, review);
-          IMDB.add(newMovie);
+        if(!BST.isEmpty()) {
+          IMDB.add(input);
 
           newMovie = new Movie(tagline, review);
           IMDB.addTemp(newMovie);
@@ -121,17 +100,8 @@ void Operator::run() {
       }
       // Operation Number has been selected.
       else {
-        // 1. Is Empty - Complete!
+        // 1. AddItem - Complete!
         if (option == 1) {
-          cout << "\nBinary Tree is: ";
-          if(IMDB.isFull()) {
-            cout << "Full!\n\n";
-          } else {
-            cout << "NOT Full!\n\n";
-          }
-        }
-        // 2- AddMovie - Complete!
-        else if (option == 2) {
           cout << "\nPreparing to Insert a New Movie...\n";
 
           cout << "\nPlease enter the movie title which you want to enter into the tree:\n> ";
@@ -150,8 +120,6 @@ void Operator::run() {
               cin >> stars;
 
             } else {
-              parseTitle(tagline);
-
               bool isInserted = false;
               bool isUnique = true;
 
@@ -192,8 +160,8 @@ void Operator::run() {
           }
 
         }
-        // 3- RemoveMovie - Complete!
-        else if (option == 3) {
+        // 2. RemoveItem - Complete!
+        else if (option == 2) {
           try {
             if(!IMDB.isEmpty()) {
               cout << "\nPreparing to Delete a New Movie...\n";
@@ -213,75 +181,8 @@ void Operator::run() {
           }
 
         }
-        // 4- Leaf - Complete!
-        else if (option == 4) {
-          cout << "\nPlease enter the name of your movie which you want to test as a leaf node:\n> ";
-          cin >> tagline;
-
-          while(1) {
-            if(cin.fail()) {
-              cin.clear();
-              cin.ignore(numeric_limits<streamsize>::max(),'\n');
-              cout << "\n\nERROR! Invalid entry!\n\n";
-              cout << "\nPlease enter the name of your movie which you want to test as a leaf node:\n> ";
-              cin >> tagline;
-
-            } else {
-              parseTitle(tagline);
-
-              int index = 1;
-              bool isFound = false;
-
-              for (int i = 1; i <= IMDB.getLength(); i++) {
-                if(IMDB.getEntry(i)->getTitle() == tagline) {
-                  index = i;
-                  isFound = true;
-                }
-              }
-
-              if (isFound) {
-                if(IMDB.isALeaf(index))
-                  cout << "\n>Output:The record with movie title " << tagline << " is a leaf node.\n\n";
-                else
-                  cout << "\n>Output:The record with movie title " << tagline << " is NOT a leaf node.\n\n";
-              } else
-                cout << "\nERROR! Movie not found in Tree.\n\n";
-
-              break;
-            }
-          }
-        }
-        // 5- PrintLeaves - Complete!
-        else if (option == 5) {
-          cout << "\nOutput:  The leaf nodes are: ";
-          IMDB.printLeaves();
-        }
-        // 6- TreeHeight - Complete!
-        else if (option == 6) {
-          cout << "\nOutput: The height of the tree is " << IMDB.getHeight() << "\n\n";
-        }
-        // 7- Postorder - Complete!
-        else if (option == 7) {
-          if(IMDB.isEmpty()) {
-            cout << "ERROR! Tree is Empty!\n\n";
-          } else {
-            cout << "\nPrinting List of Movies in...\n\nPre-Order - ";
-            IMDB.preOrder();
-            IMDB.print();
-          }
-        }
-        // 8- Postorder - Complete!
-        else if (option == 8) {
-          if(IMDB.isEmpty()) {
-            cout << "ERROR! Tree is Empty!\n\n";
-          } else {
-            cout << "\nPrinting List of Movies in...\n\nPost-Order - ";
-            IMDB.postOrder();
-            IMDB.print();
-          }
-        }
-        // 9- Inorder - Complete!
-        else if (option == 9) {
+        // 3. InorderSuccessor - Complete!
+        else if (option == 3) {
           if(IMDB.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
@@ -290,8 +191,8 @@ void Operator::run() {
             IMDB.print();
           }
         }
-        // 10- Levelorder - Complete!
-        else if (option == 10) {
+        // 4. Levelorder - Complete!
+        else if (option == 4) {
           if(IMDB.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
@@ -300,8 +201,8 @@ void Operator::run() {
             IMDB.print();
           }
         }
-        // 11- Exit - Complete!
-        else if (option == 11) {
+        // 9. Exit - Complete!
+        else if (option == 9) {
           cout << "\nClosing Program...\n";
         }
         // Otherwise - Complete!
@@ -312,7 +213,7 @@ void Operator::run() {
         break;
       }
     }
-  } while(option != 11);
+  } while(option != 9);
 
   do {
     try {

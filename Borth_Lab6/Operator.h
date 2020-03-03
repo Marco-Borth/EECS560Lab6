@@ -11,7 +11,7 @@
 #ifndef OPERATOR_H
 #define OPERATOR_H
 
-#include "BinaryTree.h"
+#include "BinarySearchTree.cpp"
 #include "LinkedList.h"
 #include "Movie.h"
 #include <string>
@@ -24,14 +24,9 @@ private:
   int option;
 
   string file;
-  string stars;
+  int input;
 
-  string tagline;
-  float review;
-
-  BinaryTree<Movie*> IMDB;
-
-  Movie* newMovie;
+  BinarySearchTree<int*, int> BST;
 
 public:
 /**
@@ -45,8 +40,6 @@ public:
 * @post prints list of commands to display for the user.
 */
   void printCommands();
-
-  void parseTitle(string parse);
 
 /*
 * @pre filename is a string.
