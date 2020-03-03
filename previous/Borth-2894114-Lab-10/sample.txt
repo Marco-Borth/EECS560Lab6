@@ -1,0 +1,28 @@
+NEXT
+ARRIVE John Gibbons 34 sleep_deprivation 2
+NEXT
+ARRIVE Alec Gibbons 0 cries_at_night 3
+NEXT
+ARRIVE Grigori Rasputin 47 everything 9
+NEXT
+ARRIVE Marco Borth 19 sinus_infection 4
+NEXT
+ARRIVE Roman Feydash 13 stomach_ache 4
+COUNT
+NEXT
+TREAT
+NEXT
+TREAT
+COUNT
+NEXT
+TREAT
+NEXT
+TREAT
+COUNT
+NEXT
+TREAT
+NEXT
+TREAT
+COUNT
+ARRIVE Raymond Tollison 20 allergic_reaction_to_peanuts 7
+NEXT
