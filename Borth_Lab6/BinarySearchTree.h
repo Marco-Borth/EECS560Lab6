@@ -11,6 +11,7 @@
 #ifndef BINARY_SEARCH_TREE_H
 #define BINARY_SEARCH_TREE_H
 
+#include "LinkedList.h"
 #include "BinaryNode.h"
 #include <string>
 #include <iostream>
@@ -23,7 +24,8 @@ class BinarySearchTree
 {
 private:
   BinaryNode<T>* m_root;
-  int nodeCount, orderCount;
+  LinkedList<T> orderList;
+  int nodeCount, orderCount, height;
   ofstream outFile;
 
 /*
@@ -76,27 +78,6 @@ private:
 * @post returns the Binary node to replace the one to be deleted as the inOrder successor.
 */
   BinaryNode<T>* inOrderSuccessor(BinaryNode<T>* curSubTree);
-
-/*
-* @pre none.
-* @param curSubTree is a valid BinaryNode<T> pointer.
-* @post prints all BinaryNodes in the BinarySearchTree preOrder into file.
-*/
-  void preOrderWrite(BinaryNode<T>* curSubTree);
-
-/*
-* @pre none.
-* @param curSubTree is a valid BinaryNode<T> pointer.
-* @post prints all BinaryNodes in the BinarySearchTree inOrder into file.
-*/
-  void inOrderWrite(BinaryNode<T>* curSubTree);
-
-/*
-* @pre none.
-* @param curSubTree is a valid BinaryNode<T> pointer.
-* @post prints all BinaryNodes in the BinarySearchTree postOrder into file.
-*/
-  void postOrderWrite(BinaryNode<T>* curSubTree);
 
 /*
 * @pre none.
@@ -179,12 +160,6 @@ public:
   BinarySearchTree<T, K>& operator=(const BinarySearchTree<T, K>& original);
 
 /*
-* @pre none.
-* @post prints all BinaryNodes in the BinarySearchTree inOrder.
-*/
-  void inOrder(BinaryNode<T>* curSubTree);
-
-/*
 * @param filename is the name of an output file.
 * @param traversalOrder is either preOrder, inOrder or postOrder.
 * @post writes BinarySearchTree Nodes into file based on traversalOrder order.
@@ -211,6 +186,33 @@ public:
 * @post returns the number of BinaryNodes.
 */
   int getNumberCount() const;
+
+/*
+* @pre none.
+* @post isEmpty returns false if m_size > 0, returns true otherwise.
+*/
+  bool isEmpty() const;
+
+/*
+* @pre none.
+* @param curSubTree is a valid BinaryNode<T> pointer.
+* @post prints all BinaryNodes in the BinarySearchTree preOrder into file.
+*/
+  void preOrder(BinaryNode<T>* curSubTree);
+
+/*
+* @pre none.
+* @param curSubTree is a valid BinaryNode<T> pointer.
+* @post prints all BinaryNodes in the BinarySearchTree inOrder into file.
+*/
+  void inOrder(BinaryNode<T>* curSubTree);
+
+/*
+* @pre none.
+* @param curSubTree is a valid BinaryNode<T> pointer.
+* @post prints all BinaryNodes in the BinarySearchTree postOrder into file.
+*/
+  void postOrder(BinaryNode<T>* curSubTree);
 };
 
 #include "BinarySearchTree.cpp"

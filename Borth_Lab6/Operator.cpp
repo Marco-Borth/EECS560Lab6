@@ -51,33 +51,7 @@ void Operator::run() {
         inFile.ignore(numeric_limits<streamsize>::max(),'\n');
         RatingInputFailures++;
       } else {
-        /*
-        if(!BST.isEmpty()) {
-
-          IMDB.add(input);
-
-          newMovie = new Movie(tagline, review);
-          IMDB.addTemp(newMovie);
-
-        } else {
-
-          bool isUnique = true;
-
-          for (int i = 1; i <= IMDB.getLength(); i++) {
-            if(tagline == IMDB.getEntry(i)->getTitle())
-              isUnique = false;
-          }
-
-          if(isUnique) {
-            newMovie = new Movie(tagline, review);
-            IMDB.add(newMovie);
-
-            newMovie = new Movie(tagline, review);
-            IMDB.addTemp(newMovie);
-          }
-
-        }
-        */
+        BST.add(BST.getRoot(), input);
       }
     }
 
@@ -105,63 +79,27 @@ void Operator::run() {
       else {
         // 1. AddItem - Complete!
         if (option == 1) {
-          cout << "\nPreparing to Insert a New Movie...\n";
-          /*
-          cout << "\nPlease enter the movie title which you want to enter into the tree:\n> ";
-          cin >> tagline;
-          cout << "\nPlease enter the rating of your movie:\n> ";
-          cin >> review;
+          cout << "\nPreparing to Insert a New Record...\n";
+
+          cout << "\n> Enter the element to be added: ";
+          cin >> input;
 
           while(1) {
             if(cin.fail()) {
               cin.clear();
               cin.ignore(numeric_limits<streamsize>::max(),'\n');
               cout << "\n\nERROR! Invalid entry!\n\n";
-              cout << "\nPlease enter the movie title which you want to enter into the tree:\n> ";
-              cin >> tagline;
-              cout << "\nPlease enter the rating of your movie:\n> ";
-              cin >> stars;
+              cout << "\n> Enter the element to be added: ";
+              cin >> input;
 
             } else {
-              bool isInserted = false;
-              bool isUnique = true;
-
-              try {
-                if(!IMDB.isEmpty()) {
-                  newMovie = new Movie(tagline, review);
-                  IMDB.add(newMovie);
-
-                  newMovie = new Movie(tagline, review);
-                  IMDB.addTemp(newMovie);
-                } else {
-                  bool isUnique = true;
-
-                  for (int i = 1; i <= IMDB.getLength(); i++) {
-                    if(tagline == IMDB.getEntry(i)->getTitle())
-                      isUnique = false;
-                  }
-
-                  if(isUnique) {
-                    newMovie = new Movie(tagline, review);
-                    IMDB.add(newMovie);
-
-                    newMovie = new Movie(tagline, review);
-                    IMDB.addTemp(newMovie);
-                    isInserted = true;
-                  } else
-                    throw(std::runtime_error("ERROR: Movie Record is not unique.\n"));
-                }
-              } catch (runtime_error) {
-                cout << "\n> Output: ERROR! cannot place record\n\n";
-              }
-
-              if (isInserted)
-                cout << "\n> Output: Record has been added successfully\n\n";
+              BST.add(BST.getRoot(), input);
+              cout << "\n> Element " << input << " was successfully added.\n\n";
 
               break;
             }
           }
-          */
+
         }
         // 2. RemoveItem - Complete!
         else if (option == 2) {
@@ -187,27 +125,29 @@ void Operator::run() {
         }
         // 3. InorderSuccessor - Complete!
         else if (option == 3) {
-          /*
-          if(IMDB.isEmpty()) {
+          if(BST.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
+            cout << "\nPrinting List of Movies in...\n\nPre-Order - ";
+            BST.preOrder(BST.getRoot());
+
             cout << "\nPrinting List of Movies in...\n\nIn-Order - ";
-            IMDB.inOrder();
-            IMDB.print();
+            BST.inOrder(BST.getRoot());
+
+            cout << "\nPrinting List of Movies in...\n\nPost-Order - ";
+            BST.postOrder(BST.getRoot());
+
+            cout << "\n\n";
           }
-          */
         }
         // 4. Levelorder - Complete!
         else if (option == 4) {
-          /*
-          if(IMDB.isEmpty()) {
+          if(BST.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
             cout << "\nPrinting List of Movies in...\n\nLevel-Order - ";
-            IMDB.levelOrder();
-            IMDB.print();
+            //BST.levelOrder();
           }
-          */
         }
         // 9. Exit - Complete!
         else if (option == 9) {

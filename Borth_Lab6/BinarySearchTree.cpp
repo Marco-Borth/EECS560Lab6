@@ -52,59 +52,29 @@ BinarySearchTree<T, K>& BinarySearchTree<T, K>::operator=(const BinarySearchTree
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::add(BinaryNode<T>* curSubTree, T entry)
-{
-	if (m_root == nullptr)
-	{
+void BinarySearchTree<T, K>::add(BinaryNode<T>* curSubTree, T entry) {
+	if (m_root == nullptr) {
 		m_root = new BinaryNode<T>(entry);
 		nodeCount++;
-	}
-	else
-	{
+	} else {
 		addRec(m_root, entry);
 	}
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::addRec(BinaryNode<T>* curSubTree, T entry)
-{
-	if(curSubTree->getRight() != nullptr)
-  {
-    if(entry == curSubTree->getRight()->getEntry())
-    {
-      throw(std::runtime_error("ERROR: Cannot add duplicate of an existing Pokemon.\n"));
-    }
-  }
-
-  if(curSubTree->getLeft() != nullptr)
-  {
-    if(entry == curSubTree->getLeft()->getEntry())
-    {
-      throw(std::runtime_error("ERROR: Cannot add duplicate of an existing Pokemon.\n"));
-    }
-  }
-
-	if (entry < curSubTree->getEntry())
-	{
-		if (curSubTree->getLeft() == nullptr)
-		{
+void BinarySearchTree<T, K>::addRec(BinaryNode<T>* curSubTree, T entry) {
+	if (entry < curSubTree->getEntry()) {
+		if (curSubTree->getLeft() == nullptr) {
 			curSubTree->setLeft(entry);
 			nodeCount++;
-		}
-		else
-		{
+		} else {
 			addRec(curSubTree->getLeft(), entry);
 		}
-	}
-	else if (entry > curSubTree->getEntry())
-	{
-		if (curSubTree->getRight() == nullptr)
-		{
+	} else {
+		if (curSubTree->getRight() == nullptr) {
 			curSubTree->setRight(entry);
 			nodeCount++;
-		}
-		else
-		{
+		} else {
 			addRec(curSubTree->getRight(), entry);
 		}
 	}
@@ -374,21 +344,6 @@ BinaryNode<T>* BinarySearchTree<T, K>::inOrderSuccessor(BinaryNode<T>* curSubTre
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::inOrder(BinaryNode<T>* curSubTree)
-{
-	if (curSubTree->getLeft() != nullptr)
-	{
-		inOrder(curSubTree->getLeft());
-	}
-	cout << curSubTree->getEntry() << ", " << curSubTree->getEntry() << "\n";
-	orderCount++;
-	if (curSubTree->getRight() != nullptr)
-	{
-		inOrder(curSubTree->getRight());
-	}
-}
-
-template <typename T, typename K>
 void BinarySearchTree<T, K>::postOrderDelete(BinaryNode<T>* curSubTree)
 {
 	if (curSubTree->getLeft() != nullptr)
@@ -458,46 +413,58 @@ void BinarySearchTree<T, K>::saveToFile(string filename, string traversalOrder)
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::preOrderWrite(BinaryNode<T>* curSubTree)
-{
-	outFile << curSubTree->getEntry() << " " << curSubTree->getEntry() << "\n";
-	if (curSubTree->getLeft() != nullptr)
-	{
-		preOrderWrite(curSubTree->getLeft());
+void BinarySearchTree<T, K>::preOrder(BinaryNode<T>* curSubTree) {
+	cout << curSubTree->getEntry() << " ";
+
+	if (curSubTree->getLeft() != nullptr) {
+		preOrder(curSubTree->getLeft());
 	}
-	if (curSubTree->getRight() != nullptr)
-	{
-		preOrderWrite(curSubTree->getRight());
+
+	if (curSubTree->getRight() != nullptr) {
+		preOrder(curSubTree->getRight());
 	}
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::inOrderWrite(BinaryNode<T>* curSubTree)
-{
-	if (curSubTree->getLeft() != nullptr)
-	{
-		inOrderWrite(curSubTree->getLeft());
+void BinarySearchTree<T, K>::inOrder(BinaryNode<T>* curSubTree) {
+	if (curSubTree->getLeft() != nullptr) {
+		inOrder(curSubTree->getLeft());
 	}
-	outFile << curSubTree->getEntry() << " " << curSubTree->getEntry() << "\n";
-	if (curSubTree->getRight() != nullptr)
-	{
-		inOrderWrite(curSubTree->getRight());
+
+	cout << curSubTree->getEntry() << " ";
+
+	if (curSubTree->getRight() != nullptr) {
+		inOrder(curSubTree->getRight());
 	}
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::postOrderWrite(BinaryNode<T>* curSubTree)
-{
-	if (curSubTree->getLeft() != nullptr)
-	{
-		postOrderWrite(curSubTree->getLeft());
+void BinarySearchTree<T, K>::postOrder(BinaryNode<T>* curSubTree) {
+	if (curSubTree->getLeft() != nullptr) {
+		postOrder(curSubTree->getLeft());
 	}
-	if (curSubTree->getRight() != nullptr)
-	{
-		postOrderWrite(curSubTree->getRight());
+
+	if (curSubTree->getRight() != nullptr) {
+		postOrder(curSubTree->getRight());
 	}
-	outFile << curSubTree->getEntry() << " " << curSubTree->getEntry() << "\n";
+
+	cout << curSubTree->getEntry() << " ";
 }
+
+/*
+template <typename T, typename K>
+void BinarySearchTree<T, K>::levelOrder() {
+	orderList.clear();
+	if (!isEmpty()) {
+		for (int i = 1; i <= nodeCount; i++) {
+			orderList.getEntry(i)->setTitle(myTree.getEntry(i)->getTitle());
+			orderList.getEntry(i)->setRating(myTree.getEntry(i)->getRating());
+		}
+	} else {
+		throw(std::runtime_error("ERROR: Tree is empty.\n"));
+	}
+}
+*/
 
 template <typename T, typename K>
 int BinarySearchTree<T, K>::getOrderCount()
@@ -515,4 +482,12 @@ template <typename T, typename K>
 int BinarySearchTree<T, K>::getNumberCount() const
 {
 	return nodeCount;
+}
+
+template <typename T, typename K>
+bool BinarySearchTree<T, K>::isEmpty() const {
+	if (m_root == nullptr)
+		return true;
+	else
+		return false;
 }
