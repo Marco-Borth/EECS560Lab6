@@ -24,6 +24,8 @@ class BinarySearchTree
 {
 private:
   BinaryNode<T>* m_root;
+  BinaryNode<T>* minNode;
+  BinaryNode<T>* minNodeParent;
   LinkedList<T> orderList;
   int nodeCount, orderCount, height;
   ofstream outFile;
@@ -54,7 +56,7 @@ private:
 * @param twoChildren is true if curSubTree has both leftChild and rightChild.
 * @post removes a BinaryNode from BinarySearchTree and restructures BinarySearchTree Accordingly.
 */
-  void removeRec(BinaryNode<T>* curSubTree, K key, bool twoChildren);
+  void removeRec(BinaryNode<T>* curSubTree, K key);
 
 /*
 * @pre none.
@@ -101,6 +103,10 @@ private:
 * @post copies the BinaryNodes from subTreeCopy onto this BinarySearchTree.
 */
   BinaryNode<T>* recCopyHelper(const BinaryNode<T>* subTreeCopy);
+
+  BinaryNode<T>* minPriority(BinaryNode<T>* curSubTree);
+
+  BinaryNode<T>* minPriorityParent(BinaryNode<T>* curSubTree);
 
 public:
 /*

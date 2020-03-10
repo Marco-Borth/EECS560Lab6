@@ -79,7 +79,7 @@ void Operator::run() {
       else {
         // 1. AddItem - Complete!
         if (option == 1) {
-          cout << "\nPreparing to Insert a New Record...\n";
+          cout << "\nPreparing to Insert a New Element...\n";
 
           cout << "\n> Enter the element to be added: ";
           cin >> input;
@@ -103,28 +103,46 @@ void Operator::run() {
         }
         // 2. RemoveItem - Complete!
         else if (option == 2) {
-          /*
-          try {
-            if(!IMDB.isEmpty()) {
-              cout << "\nPreparing to Delete a New Movie...\n";
+          if(!BST.isEmpty()) {
+            cout << "\nPreparing to Delete a New Element...\n";
 
-              tagline = IMDB.getEntry(IMDB.getLength())->getTitle();
-              review = IMDB.getEntry(IMDB.getLength())->getRating();
-              IMDB.remove();
+            cout << "\n> Enter the element to be deleted: ";
+            cin >> input;
 
-              IMDB.removeTemp();
-              cout << "Record successfully removed\n\n";
-                cout << "The last movie with title " << tagline << " and rating " << review << " has been deleted.\n\n";
+            while(1) {
+              if(cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                cout << "\n\nERROR! Invalid entry!\n\n";
+                cout << "\n> Enter the element to be deleted: ";
+                cin >> input;
 
-            } else
-              cout << "\n> Output: ERROR! Tree is Empty.\n\n";
-          } catch (runtime_error) {
+              } else {
+                try {
+                  BST.remove(input);
+                  cout << "\n> Element " << input << " was successfully deleted.\n\n";
+                } catch (runtime_error) {
+                  cout << "\n> Output: ERROR! input not found.\n\n";
+                }
+
+                break;
+              }
+            }
+          } else {
             cout << "\n> Output: ERROR! Tree is Empty.\n\n";
           }
-          */
+
         }
         // 3. InorderSuccessor - Complete!
         else if (option == 3) {
+          if(BST.isEmpty()) {
+            cout << "ERROR! Tree is Empty!\n\n";
+          } else {
+
+          }
+        }
+        // 4. Levelorder - Complete!
+        else if (option == 4) {
           if(BST.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
@@ -137,15 +155,7 @@ void Operator::run() {
             cout << "\nPrinting List of Movies in...\n\nPost-Order - ";
             BST.postOrder(BST.getRoot());
 
-            cout << "\n\n";
-          }
-        }
-        // 4. Levelorder - Complete!
-        else if (option == 4) {
-          if(BST.isEmpty()) {
-            cout << "ERROR! Tree is Empty!\n\n";
-          } else {
-            cout << "\nPrinting List of Movies in...\n\nLevel-Order - ";
+            cout << "\nPrinting List of Movies in...\n\nLevel-Order - \n\n";
             //BST.levelOrder();
           }
         }
