@@ -11,9 +11,8 @@
 #ifndef OPERATOR_H
 #define OPERATOR_H
 
-#include "BinarySearchTree.cpp"
+#include "BinarySearchTree.h"
 #include "LinkedList.h"
-#include "Movie.h"
 #include <string>
 #include <stdexcept>
 using namespace std;
@@ -26,7 +25,7 @@ private:
   string file;
   int input;
 
-  BinarySearchTree<int*, int> BST;
+  BinarySearchTree<int, int> BST;
 
 public:
 /**

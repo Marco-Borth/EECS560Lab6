@@ -24,6 +24,7 @@ class BinarySearchTree
 private:
   BinaryNode<T>* m_root;
   int nodeCount, orderCount;
+  ofstream outFile;
 
 /*
 * @pre add calls addRec.
@@ -67,6 +68,35 @@ private:
 * @post adds every BinaryNode in curSubTree in preOrder.
 */
   void preOrderAdd(BinaryNode<T>* curSubTree, T entry);
+
+/*
+* @pre none.
+* @param curSubTree is a valid BinaryNode<T> pointer.
+* @param entry is a valid T object.
+* @post returns the Binary node to replace the one to be deleted as the inOrder successor.
+*/
+  BinaryNode<T>* inOrderSuccessor(BinaryNode<T>* curSubTree);
+
+/*
+* @pre none.
+* @param curSubTree is a valid BinaryNode<T> pointer.
+* @post prints all BinaryNodes in the BinarySearchTree preOrder into file.
+*/
+  void preOrderWrite(BinaryNode<T>* curSubTree);
+
+/*
+* @pre none.
+* @param curSubTree is a valid BinaryNode<T> pointer.
+* @post prints all BinaryNodes in the BinarySearchTree inOrder into file.
+*/
+  void inOrderWrite(BinaryNode<T>* curSubTree);
+
+/*
+* @pre none.
+* @param curSubTree is a valid BinaryNode<T> pointer.
+* @post prints all BinaryNodes in the BinarySearchTree postOrder into file.
+*/
+  void postOrderWrite(BinaryNode<T>* curSubTree);
 
 /*
 * @pre none.
@@ -148,13 +178,18 @@ public:
 */
   BinarySearchTree<T, K>& operator=(const BinarySearchTree<T, K>& original);
 
-  /*
-  * @pre none.
-  * @param curSubTree is a valid BinaryNode<T> pointer.
-  * @param entry is a valid T object.
-  * @post returns the Binary node to replace the one to be deleted as the inOrder successor.
-  */
-    BinaryNode<T>* inOrderSuccessor(BinaryNode<T>* curSubTree);
+/*
+* @pre none.
+* @post prints all BinaryNodes in the BinarySearchTree inOrder.
+*/
+  void inOrder(BinaryNode<T>* curSubTree);
+
+/*
+* @param filename is the name of an output file.
+* @param traversalOrder is either preOrder, inOrder or postOrder.
+* @post writes BinarySearchTree Nodes into file based on traversalOrder order.
+*/
+  void saveToFile(string filename, string traversalOrder);
 
 /*
 * @pre none.

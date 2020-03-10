@@ -17,8 +17,6 @@ using namespace std;
 
 Operator::Operator(string filename){
   file = filename;
-  tagline = "\0";
-  review = 0;
 }
 
 void Operator::printCommands() {
@@ -46,19 +44,23 @@ void Operator::run() {
   } else {
     int RatingInputFailures = 0;
     while (!inFile.eof()) {
-      inFile >> input
+      inFile >> input;
 
       if(inFile.fail()) {
         inFile.clear();
         inFile.ignore(numeric_limits<streamsize>::max(),'\n');
         RatingInputFailures++;
       } else {
+        /*
         if(!BST.isEmpty()) {
+
           IMDB.add(input);
 
           newMovie = new Movie(tagline, review);
           IMDB.addTemp(newMovie);
+
         } else {
+
           bool isUnique = true;
 
           for (int i = 1; i <= IMDB.getLength(); i++) {
@@ -73,8 +75,9 @@ void Operator::run() {
             newMovie = new Movie(tagline, review);
             IMDB.addTemp(newMovie);
           }
-        }
 
+        }
+        */
       }
     }
 
@@ -103,7 +106,7 @@ void Operator::run() {
         // 1. AddItem - Complete!
         if (option == 1) {
           cout << "\nPreparing to Insert a New Movie...\n";
-
+          /*
           cout << "\nPlease enter the movie title which you want to enter into the tree:\n> ";
           cin >> tagline;
           cout << "\nPlease enter the rating of your movie:\n> ";
@@ -158,10 +161,11 @@ void Operator::run() {
               break;
             }
           }
-
+          */
         }
         // 2. RemoveItem - Complete!
         else if (option == 2) {
+          /*
           try {
             if(!IMDB.isEmpty()) {
               cout << "\nPreparing to Delete a New Movie...\n";
@@ -179,10 +183,11 @@ void Operator::run() {
           } catch (runtime_error) {
             cout << "\n> Output: ERROR! Tree is Empty.\n\n";
           }
-
+          */
         }
         // 3. InorderSuccessor - Complete!
         else if (option == 3) {
+          /*
           if(IMDB.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
@@ -190,9 +195,11 @@ void Operator::run() {
             IMDB.inOrder();
             IMDB.print();
           }
+          */
         }
         // 4. Levelorder - Complete!
         else if (option == 4) {
+          /*
           if(IMDB.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
@@ -200,6 +207,7 @@ void Operator::run() {
             IMDB.levelOrder();
             IMDB.print();
           }
+          */
         }
         // 9. Exit - Complete!
         else if (option == 9) {
@@ -215,6 +223,7 @@ void Operator::run() {
     }
   } while(option != 9);
 
+  /*
   do {
     try {
       if(!IMDB.isEmpty()) {
@@ -226,9 +235,7 @@ void Operator::run() {
 
     }
   } while(!IMDB.isEmpty());
-
-  tagline = "\0";
-  review = 0;
+  */
 
   cout << "\nBye Bye!\n";
   cout << "\nHave a nice day!...\n\n";
