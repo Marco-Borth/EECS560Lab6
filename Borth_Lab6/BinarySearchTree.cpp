@@ -501,20 +501,19 @@ void BinarySearchTree<T, K>::spiralLevelOrderRec(BinaryNode<T>* curSubTree, int 
 	}
 }
 
-/*
 template <typename T, typename K>
-void BinarySearchTree<T, K>::levelOrder() {
-	orderList.clear();
-	if (!isEmpty()) {
-		for (int i = 1; i <= nodeCount; i++) {
-			orderList.getEntry(i)->setTitle(myTree.getEntry(i)->getTitle());
-			orderList.getEntry(i)->setRating(myTree.getEntry(i)->getRating());
-		}
-	} else {
-		throw(std::runtime_error("ERROR: Tree is empty.\n"));
-	}
+void BinarySearchTree<T, K>::leftSideView(BinaryNode<T>* curSubTree) {
+	cout << curSubTree->getEntry() << " ";
+	if(curSubTree->getLeft() != nullptr)
+		leftSideView(curSubTree->getLeft());
 }
-*/
+
+template <typename T, typename K>
+void BinarySearchTree<T, K>::rightSideView(BinaryNode<T>* curSubTree) {
+	cout << curSubTree->getEntry() << " ";
+	if(curSubTree->getRight() != nullptr)
+		rightSideView(curSubTree->getRight());
+}
 
 template <typename T, typename K>
 int BinarySearchTree<T, K>::getOrderCount()

@@ -147,28 +147,48 @@ void Operator::run() {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
             /*
-            cout << "\nPrinting List of Movies in...\n\nPre-Order - ";
+            cout << "\nPrinting Elements in...\n\nPre-Order - ";
             BST.preOrder(BST.getRoot());
 
-            cout << "\nPrinting List of Movies in...\n\nIn-Order - ";
+            cout << "\nPrinting Elements in...\n\nIn-Order - ";
             BST.inOrder(BST.getRoot());
 
-            cout << "\nPrinting List of Movies in...\n\nPost-Order - ";
+            cout << "\nPrinting Elements in...\n\nPost-Order - ";
             BST.postOrder(BST.getRoot());
             */
 
-            cout << "\nPrinting List of Movies in...\n\nLevel-Order - ";
+            cout << "\nPrinting Elements in...\n\nLevel-Order - ";
             BST.levelOrder();
             cout << "\n\n";
           }
         }
-        // 4. SpiralLevelOrder - Complete!
+        // 5. SpiralLevelOrder - Complete!
         else if (option == 5) {
           if(BST.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
-            cout << "\nPrinting List of Movies in...\n\nSpiral-Level-Order - ";
+            cout << "\nPrinting Elements in...\n\nSpiral-Level-Order - ";
             BST.spiralLevelOrder();
+            cout << "\n\n";
+          }
+        }
+        // 6. LeftSideView - Complete!
+        else if (option == 6) {
+          if(BST.isEmpty()) {
+            cout << "ERROR! Tree is Empty!\n\n";
+          } else {
+            cout << "\nPrinting Elements from the left side view: ";
+            BST.leftSideView(BST.getRoot());
+            cout << "\n\n";
+          }
+        }
+        // 7. RightSideView - Complete!
+        else if (option == 7) {
+          if(BST.isEmpty()) {
+            cout << "ERROR! Tree is Empty!\n\n";
+          } else {
+            cout << "\nPrinting Elements from the left side view: ";
+            BST.rightSideView(BST.getRoot());
             cout << "\n\n";
           }
         }

@@ -227,6 +227,10 @@ public:
   void levelOrder();
 
   void spiralLevelOrder();
+
+  void leftSideView(BinaryNode<T>* curSubTree);
+
+  void rightSideView(BinaryNode<T>* curSubTree);
 };
 
 #include "BinarySearchTree.cpp"
