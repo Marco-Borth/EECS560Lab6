@@ -468,6 +468,39 @@ void BinarySearchTree<T, K>::levelOrderRec(BinaryNode<T>* curSubTree, int depth,
 	}
 }
 
+template <typename T, typename K>
+void BinarySearchTree<T, K>::spiralLevelOrder() {
+	for(int i = 0; i <= m_height; i++) {
+		spiralLevelOrderRec(m_root, 0, i, i%2);
+	}
+}
+
+template <typename T, typename K>
+void BinarySearchTree<T, K>::spiralLevelOrderRec(BinaryNode<T>* curSubTree, int depth, int targetDepth, int direction) {
+	if (depth == targetDepth) {
+		cout << curSubTree->getEntry() << " ";
+	} else {
+		depth++;
+		if (direction == 0) { // left to right print.
+			if (curSubTree->getLeft() != nullptr) {
+				spiralLevelOrderRec(curSubTree->getLeft(), depth, targetDepth, direction);
+			}
+
+			if (curSubTree->getRight() != nullptr) {
+				spiralLevelOrderRec(curSubTree->getRight(), depth, targetDepth, direction);
+			}
+		} else if (direction == 1) { // right to left print
+			if (curSubTree->getRight() != nullptr) {
+				spiralLevelOrderRec(curSubTree->getRight(), depth, targetDepth, direction);
+			}
+
+			if (curSubTree->getLeft() != nullptr) {
+				spiralLevelOrderRec(curSubTree->getLeft(), depth, targetDepth, direction);
+			}
+		}
+	}
+}
+
 /*
 template <typename T, typename K>
 void BinarySearchTree<T, K>::levelOrder() {

@@ -167,7 +167,9 @@ void Operator::run() {
           if(BST.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
-            
+            cout << "\nPrinting List of Movies in...\n\nSpiral-Level-Order - ";
+            BST.spiralLevelOrder();
+            cout << "\n\n";
           }
         }
         // 9. Exit - Complete!

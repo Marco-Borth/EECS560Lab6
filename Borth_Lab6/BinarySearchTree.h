@@ -110,6 +110,8 @@ private:
 
   void levelOrderRec(BinaryNode<T>* curSubTree, int depth, int targetDepth);
 
+  void spiralLevelOrderRec(BinaryNode<T>* curSubTree, int depth, int targetDepth, int direction);
+
 public:
 /*
 * @pre Executive.cpp must construct driverClass object.
@@ -223,6 +225,8 @@ public:
   void postOrder(BinaryNode<T>* curSubTree);
 
   void levelOrder();
+
+  void spiralLevelOrder();
 };
 
 #include "BinarySearchTree.cpp"
