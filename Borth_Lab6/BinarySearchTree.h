@@ -27,7 +27,7 @@ private:
   BinaryNode<T>* minNode;
   BinaryNode<T>* minNodeParent;
   LinkedList<T> orderList;
-  int nodeCount, orderCount, height;
+  int nodeCount, orderCount, m_height;
   ofstream outFile;
 
 /*
@@ -39,7 +39,7 @@ private:
 * @post if left or right != nullptr, the BinaryNode is to be then added to either curSubTree->getLeft or curSubTree-> getRight.
 * @post no duplicates are to be allowed.
 */
-  void addRec(BinaryNode<T>* curSubTree, T entry);
+  void addRec(BinaryNode<T>* curSubTree, T entry, int depth);
 
 /*
 * @pre search calls searchRec.
@@ -107,6 +107,8 @@ private:
   BinaryNode<T>* minPriority(BinaryNode<T>* curSubTree);
 
   BinaryNode<T>* minPriorityParent(BinaryNode<T>* curSubTree);
+
+  void levelOrderRec(BinaryNode<T>* curSubTree, int depth, int targetDepth);
 
 public:
 /*
@@ -219,6 +221,8 @@ public:
 * @post prints all BinaryNodes in the BinarySearchTree postOrder into file.
 */
   void postOrder(BinaryNode<T>* curSubTree);
+
+  void levelOrder();
 };
 
 #include "BinarySearchTree.cpp"

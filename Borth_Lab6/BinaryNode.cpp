@@ -61,8 +61,7 @@ BinaryNode<T>* BinaryNode<T>::getLeft() const
 template <typename T>
 void BinaryNode<T>::inheritLeft(BinaryNode<T>* left)
 {
-  m_entry = left.getEntry();
-  m_left = left.getLeft();
+  m_left = left;
 }
 
 template <typename T>
@@ -80,6 +79,5 @@ BinaryNode<T>* BinaryNode<T>::getRight() const
 template <typename T>
 void BinaryNode<T>::inheritRight(BinaryNode<T>* right)
 {
-  m_entry = right.getEntry();
-  m_right = right.getRight();
+  m_right = right;
 }

@@ -146,6 +146,7 @@ void Operator::run() {
           if(BST.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
+            /*
             cout << "\nPrinting List of Movies in...\n\nPre-Order - ";
             BST.preOrder(BST.getRoot());
 
@@ -154,9 +155,19 @@ void Operator::run() {
 
             cout << "\nPrinting List of Movies in...\n\nPost-Order - ";
             BST.postOrder(BST.getRoot());
+            */
 
-            cout << "\nPrinting List of Movies in...\n\nLevel-Order - \n\n";
-            //BST.levelOrder();
+            cout << "\nPrinting List of Movies in...\n\nLevel-Order - ";
+            BST.levelOrder();
+            cout << "\n\n";
+          }
+        }
+        // 4. SpiralLevelOrder - Complete!
+        else if (option == 5) {
+          if(BST.isEmpty()) {
+            cout << "ERROR! Tree is Empty!\n\n";
+          } else {
+            
           }
         }
         // 9. Exit - Complete!

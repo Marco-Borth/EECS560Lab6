@@ -57,27 +57,31 @@ void BinarySearchTree<T, K>::add(BinaryNode<T>* curSubTree, T entry) {
 		m_root = new BinaryNode<T>(entry);
 		nodeCount++;
 	} else {
-		addRec(m_root, entry);
+		addRec(m_root, entry, 0);
 	}
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::addRec(BinaryNode<T>* curSubTree, T entry) {
+void BinarySearchTree<T, K>::addRec(BinaryNode<T>* curSubTree, T entry, int depth) {
+	depth++;
 	if (entry < curSubTree->getEntry()) {
 		if (curSubTree->getLeft() == nullptr) {
 			curSubTree->setLeft(entry);
 			nodeCount++;
 		} else {
-			addRec(curSubTree->getLeft(), entry);
+			addRec(curSubTree->getLeft(), entry, depth);
 		}
 	} else {
 		if (curSubTree->getRight() == nullptr) {
 			curSubTree->setRight(entry);
 			nodeCount++;
 		} else {
-			addRec(curSubTree->getRight(), entry);
+			addRec(curSubTree->getRight(), entry, depth);
 		}
 	}
+
+	if(depth > m_height)
+		m_height = depth;
 }
 
 template <typename T, typename K>
@@ -110,10 +114,8 @@ bool BinarySearchTree<T, K>::searchRec(K key, BinaryNode<T>* curSubTree) const {
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::clear()
-{
+void BinarySearchTree<T, K>::clear() {
 	postOrderDelete(m_root);
-	//delete m_root;
 	m_root = nullptr;
 }
 
@@ -440,6 +442,30 @@ void BinarySearchTree<T, K>::postOrder(BinaryNode<T>* curSubTree) {
 	}
 
 	cout << curSubTree->getEntry() << " ";
+}
+
+template <typename T, typename K>
+void BinarySearchTree<T, K>::levelOrder() {
+	for(int i = 0; i <= m_height; i++) {
+		levelOrderRec(m_root, 0, i);
+	}
+}
+
+template <typename T, typename K>
+void BinarySearchTree<T, K>::levelOrderRec(BinaryNode<T>* curSubTree, int depth, int targetDepth) {
+	if (depth == targetDepth) {
+		cout << curSubTree->getEntry() << " ";
+	} else {
+		depth++;
+
+		if (curSubTree->getLeft() != nullptr) {
+			levelOrderRec(curSubTree->getLeft(), depth, targetDepth);
+		}
+
+		if (curSubTree->getRight() != nullptr) {
+			levelOrderRec(curSubTree->getRight(), depth, targetDepth);
+		}
+	}
 }
 
 /*
