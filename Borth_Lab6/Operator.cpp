@@ -138,6 +138,30 @@ void Operator::run() {
           if(BST.isEmpty()) {
             cout << "ERROR! Tree is Empty!\n\n";
           } else {
+            cout << "\nPreparing to find the inorder successor...\n";
+
+            cout << "\n> Enter the element to be find its inorder successor: ";
+            cin >> input;
+            while(1) {
+              if(cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                cout << "\n\nERROR! Invalid entry!\n\n";
+                cout << "\n> Enter the element to be find its inorder successor: ";
+                cin >> input;
+
+              } else {
+                if(BST.search(input)) {
+                  cout << "The inorder successor of " << input << " is ";
+                  BST.inOrderSuccessor(input);
+                  cout << ".\n\n";
+                } else {
+                  cout << "\n> ERROR! Element NOT found.\n\n";
+                }
+
+                break;
+              }
+            }
 
           }
         }
@@ -151,7 +175,7 @@ void Operator::run() {
             BST.preOrder(BST.getRoot());
 
             cout << "\nPrinting Elements in...\n\nIn-Order - ";
-            BST.inOrder(BST.getRoot());
+            BST.inOrder();
 
             cout << "\nPrinting Elements in...\n\nPost-Order - ";
             BST.postOrder(BST.getRoot());

@@ -26,6 +26,7 @@ private:
   BinaryNode<T>* m_root;
   BinaryNode<T>* minNode;
   BinaryNode<T>* minNodeParent;
+  BinaryNode<T>* nextInOrder;
   LinkedList<T> orderList;
   int nodeCount, orderCount, m_height;
   ofstream outFile;
@@ -76,14 +77,6 @@ private:
 /*
 * @pre none.
 * @param curSubTree is a valid BinaryNode<T> pointer.
-* @param entry is a valid T object.
-* @post returns the Binary node to replace the one to be deleted as the inOrder successor.
-*/
-  BinaryNode<T>* inOrderSuccessor(BinaryNode<T>* curSubTree);
-
-/*
-* @pre none.
-* @param curSubTree is a valid BinaryNode<T> pointer.
 * @param ranOnce checks if rightMostSwapNode has been initally called.
 * @post returns the BinaryNode to replace the one to be deleted as the rightMostNode to swap with.
 */
@@ -107,6 +100,8 @@ private:
   BinaryNode<T>* minPriority(BinaryNode<T>* curSubTree);
 
   BinaryNode<T>* minPriorityParent(BinaryNode<T>* curSubTree);
+
+  void inOrderRec(BinaryNode<T>* curSubTree);
 
   void levelOrderRec(BinaryNode<T>* curSubTree, int depth, int targetDepth);
 
@@ -215,7 +210,7 @@ public:
 * @param curSubTree is a valid BinaryNode<T> pointer.
 * @post prints all BinaryNodes in the BinarySearchTree inOrder into file.
 */
-  void inOrder(BinaryNode<T>* curSubTree);
+  void inOrder();
 
 /*
 * @pre none.
@@ -231,6 +226,14 @@ public:
   void leftSideView(BinaryNode<T>* curSubTree);
 
   void rightSideView(BinaryNode<T>* curSubTree);
+
+/*
+* @pre none.
+* @param curSubTree is a valid BinaryNode<T> pointer.
+* @param entry is a valid T object.
+* @post returns the Binary node to replace the one to be deleted as the inOrder successor.
+*/
+  void inOrderSuccessor(K key);
 };
 
 #include "BinarySearchTree.cpp"

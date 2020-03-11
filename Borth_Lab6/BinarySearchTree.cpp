@@ -324,16 +324,22 @@ void BinarySearchTree<T, K>::deleteSwapNode(BinaryNode<T>* curSubTree, bool ranO
 }
 
 template <typename T, typename K>
-BinaryNode<T>* BinarySearchTree<T, K>::inOrderSuccessor(BinaryNode<T>* curSubTree)
-{
-	BinaryNode<T>* current = curSubTree;
+void BinarySearchTree<T, K>::inOrderSuccessor(K key) {
+	nextInOrder = m_root;
 
-  while (current->getLeft() != NULL)
-	{
-		current = current->getLeft();
+	inOrder();
+	bool successorFound = false;
+
+	for(int i = 1; i <= orderList.getLength(); i++) {
+		if(orderList.getEntry(i) == key) {
+			if(i + 1 <= orderList.getLength() && !successorFound) {
+				cout << orderList.getEntry(i + 1);
+				successorFound = true;
+			} else if(!successorFound) {
+				cout << key;
+			}
+		}
 	}
-
-  return current;
 }
 
 template <typename T, typename K>
@@ -419,15 +425,31 @@ void BinarySearchTree<T, K>::preOrder(BinaryNode<T>* curSubTree) {
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::inOrder(BinaryNode<T>* curSubTree) {
-	if (curSubTree->getLeft() != nullptr) {
-		inOrder(curSubTree->getLeft());
+void BinarySearchTree<T, K>::inOrder() {
+	orderList.clear();
+	if (m_root->getLeft() != nullptr) {
+		inOrderRec(m_root->getLeft());
 	}
 
-	cout << curSubTree->getEntry() << " ";
+	//cout << m_root->getEntry() << " ";
+	orderList.insert(orderList.getLength() + 1, m_root->getEntry());
+
+	if (m_root->getRight() != nullptr) {
+		inOrderRec(m_root->getRight());
+	}
+}
+
+template <typename T, typename K>
+void BinarySearchTree<T, K>::inOrderRec(BinaryNode<T>* curSubTree) {
+	if (curSubTree->getLeft() != nullptr) {
+		inOrderRec(curSubTree->getLeft());
+	}
+
+	//cout << curSubTree->getEntry() << " ";
+	orderList.insert(orderList.getLength() + 1, curSubTree->getEntry());
 
 	if (curSubTree->getRight() != nullptr) {
-		inOrder(curSubTree->getRight());
+		inOrderRec(curSubTree->getRight());
 	}
 }
 
