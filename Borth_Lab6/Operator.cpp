@@ -216,6 +216,32 @@ void Operator::run() {
             cout << "\n\n";
           }
         }
+        // 8. KthSmallestItem - Complete!
+        else if (option == 8) {
+          if(BST.isEmpty()) {
+            cout << "ERROR! Tree is Empty!\n\n";
+          } else {
+            cout << "\nPreparing to find the kth smallest item...\n";
+
+            cout << "\n> Enter the value of k: ";
+            cin >> input;
+            while(1) {
+              if(cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                cout << "\n\nERROR! Invalid entry!\n\n";
+                cout << "\n> Enter the value of k: ";
+                cin >> input;
+
+              } else {
+                BST.kthSmallestItem(input);
+
+                break;
+              }
+            }
+
+          }
+        }
         // 9. Exit - Complete!
         else if (option == 9) {
           cout << "\nClosing Program...\n";

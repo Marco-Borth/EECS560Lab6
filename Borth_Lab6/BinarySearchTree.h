@@ -234,6 +234,8 @@ public:
 * @post returns the Binary node to replace the one to be deleted as the inOrder successor.
 */
   void inOrderSuccessor(K key);
+
+  void kthSmallestItem(int k);
 };
 
 #include "BinarySearchTree.cpp"

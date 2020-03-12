@@ -325,8 +325,6 @@ void BinarySearchTree<T, K>::deleteSwapNode(BinaryNode<T>* curSubTree, bool ranO
 
 template <typename T, typename K>
 void BinarySearchTree<T, K>::inOrderSuccessor(K key) {
-	nextInOrder = m_root;
-
 	inOrder();
 	bool successorFound = false;
 
@@ -343,22 +341,54 @@ void BinarySearchTree<T, K>::inOrderSuccessor(K key) {
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::postOrderDelete(BinaryNode<T>* curSubTree)
-{
-	if (curSubTree->getLeft() != nullptr)
-	{
+void BinarySearchTree<T, K>::kthSmallestItem(int k) {
+	inOrder();
+	int kthItem = 1;
+	int i = 1;
+
+	if(k > 1 && k <= orderList.getLength()) {
+		while(i <= orderList.getLength()) {
+			if(kthItem == k) {
+				break;
+			}
+
+			if(i + 1 <= orderList.getLength() && orderList.getEntry(i) != orderList.getEntry(i + 1))
+				kthItem++;
+
+			i++;
+		}
+	}
+
+	if(kthItem == k) {
+		cout << "\nThe " << k;
+		if (k % 10 == 1)
+			cout << "st";
+		else if (k % 10 == 2)
+			cout << "nd";
+		else if (k % 10 == 3)
+			cout << "rd";
+		else
+			cout << "th";
+
+		cout << " smallest item in the tree is " << orderList.getEntry(i) << ".\n\n";
+	} else {
+		cout << "\nERROR! kth item not found.\n\n";
+	}
+}
+
+template <typename T, typename K>
+void BinarySearchTree<T, K>::postOrderDelete(BinaryNode<T>* curSubTree) {
+	if (curSubTree->getLeft() != nullptr) {
 		postOrderDelete(curSubTree->getLeft());
 	}
-	if (curSubTree->getRight() != nullptr)
-	{
+
+	if (curSubTree->getRight() != nullptr) {
 		postOrderDelete(curSubTree->getRight());
 	}
-	if (curSubTree->getEntry() != m_root->getEntry())
-	{
+
+	if (curSubTree->getEntry() != m_root->getEntry()) {
 		curSubTree->~BinaryNode();
-	}
-	else
-	{
+	} else {
 		m_root->~BinaryNode();
 		m_root = nullptr;
 	}
@@ -366,43 +396,36 @@ void BinarySearchTree<T, K>::postOrderDelete(BinaryNode<T>* curSubTree)
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::preOrderAdd(BinaryNode<T>* curSubTree, T entry)
-{
+void BinarySearchTree<T, K>::preOrderAdd(BinaryNode<T>* curSubTree, T entry) {
 	add(curSubTree, curSubTree->getEntry());
-	if (curSubTree->getLeft() != nullptr)
-	{
+
+	if (curSubTree->getLeft() != nullptr) {
 		preOrderAdd(curSubTree->getLeft(), curSubTree->getLeft()->getEntry());
 	}
-	if (curSubTree->getRight() != nullptr)
-	{
+
+	if (curSubTree->getRight() != nullptr) {
 		preOrderAdd(curSubTree->getRight(), curSubTree->getRight()->getEntry());
 	}
 }
 
 template <typename T, typename K>
-BinaryNode<T>* BinarySearchTree<T, K>::getRoot() const
-{
+BinaryNode<T>* BinarySearchTree<T, K>::getRoot() const {
 	return m_root;
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::saveToFile(string filename, string traversalOrder)
-{
-	if (traversalOrder == "PRE" || traversalOrder == "PREORDER" || traversalOrder == "IN" || traversalOrder == "INORDER" || traversalOrder == "POST" || traversalOrder == "POSTORDER")
-	{
+void BinarySearchTree<T, K>::saveToFile(string filename, string traversalOrder) {
+	if (traversalOrder == "PRE" || traversalOrder == "PREORDER" ||
+			traversalOrder == "IN" || traversalOrder == "INORDER" ||
+			traversalOrder == "POST" || traversalOrder == "POSTORDER") {
 		//Open File.
 	  outFile.open(filename);
 
-		if (traversalOrder == "PRE" || traversalOrder == "PREORDER")
-		{
+		if (traversalOrder == "PRE" || traversalOrder == "PREORDER") {
 			preOrderWrite(m_root);
-		}
-		else if (traversalOrder == "IN" || traversalOrder == "INORDER")
-		{
+		} else if (traversalOrder == "IN" || traversalOrder == "INORDER") {
 			inOrderWrite(m_root);
-		}
-		else if (traversalOrder == "POST" || traversalOrder == "POSTORDER")
-		{
+		} else if (traversalOrder == "POST" || traversalOrder == "POSTORDER") {
 			postOrderWrite(m_root);
 		}
 
@@ -538,20 +561,17 @@ void BinarySearchTree<T, K>::rightSideView(BinaryNode<T>* curSubTree) {
 }
 
 template <typename T, typename K>
-int BinarySearchTree<T, K>::getOrderCount()
-{
+int BinarySearchTree<T, K>::getOrderCount() {
 	return orderCount;
 }
 
 template <typename T, typename K>
-void BinarySearchTree<T, K>::resetOrderCount()
-{
+void BinarySearchTree<T, K>::resetOrderCount() {
 	orderCount = 0;
 }
 
 template <typename T, typename K>
-int BinarySearchTree<T, K>::getNumberCount() const
-{
+int BinarySearchTree<T, K>::getNumberCount() const {
 	return nodeCount;
 }
 
