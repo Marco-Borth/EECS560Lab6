@@ -2,9 +2,9 @@
  *
  * File Name:  BinarySearchTree.h
  * Author: Marco Borth
- * Assignment:   EECS-268 Lab 9 Program
+ * Assignment:   EECS-560 Lab 6 – Implementation of Binary Search Trees
  * Description:  BinarySearchTree Template Class is defined.
- * Date: 5/3/19
+ * Date: 3/12/20
  *
  ---------------------------------------------------------------------------- */
 
@@ -24,9 +24,6 @@ class BinarySearchTree
 {
 private:
   BinaryNode<T>* m_root;
-  BinaryNode<T>* minNode;
-  BinaryNode<T>* minNodeParent;
-  BinaryNode<T>* nextInOrder;
   LinkedList<T> orderList;
   int nodeCount, orderCount, m_height;
   ofstream outFile;
@@ -48,7 +45,7 @@ private:
 * @param key is a valid K object.
 * @post searches for BinaryNode with entry == key, returns true if found and prints BinaryNode object, false otherwise.
 */
-  bool searchRec(K key, BinaryNode<T>* curSubTree) const;
+  bool searchRec(K key, BinaryNode<T>* curSubTree);
 
 /*
 * @pre remove calls removeRec.
@@ -142,7 +139,7 @@ public:
 * @post searches for BinaryNode with entry == key, returns true if found and prints BinaryNode object, false otherwise.
 * @post calls searchRec, search itself is only concerned with m_root.
 */
-  bool search(K key) const;
+  bool search(K key);
 
 /*
 * @pre none.

@@ -2,9 +2,9 @@
  *
  * File Name:  Operator.cpp
  * Author: Marco Borth
- * Assignment:   EECS-560 Lab 4 – Implementation of Binary Tree
- * Description:  Operator Class will either run the Interactive program for a Hash Table (Closed Hashing)
- * Date: 2/22/20
+ * Assignment:   EECS-560 Lab 6 – Implementation of Binary Search Trees
+ * Description:  Operator Class will run the Interactive program for a Binary Search Tree.
+ * Date: 3/12/20
  *
  ---------------------------------------------------------------------------- */
 
@@ -119,8 +119,12 @@ void Operator::run() {
 
               } else {
                 try {
-                  BST.remove(input);
-                  cout << "\n> Element " << input << " was successfully deleted.\n\n";
+                  if(BST.search(input)){
+                    BST.remove(input);
+                    cout << "\n> Element " << input << " was successfully deleted.\n\n";
+                  } else {
+                    cout << "\n> Output: ERROR! input not found.\n\n";
+                  }
                 } catch (runtime_error) {
                   cout << "\n> Output: ERROR! input not found.\n\n";
                 }
@@ -255,20 +259,6 @@ void Operator::run() {
       }
     }
   } while(option != 9);
-
-  /*
-  do {
-    try {
-      if(!IMDB.isEmpty()) {
-        IMDB.remove();
-
-        IMDB.removeTemp();
-      }
-    } catch (runtime_error) {
-
-    }
-  } while(!IMDB.isEmpty());
-  */
 
   cout << "\nBye Bye!\n";
   cout << "\nHave a nice day!...\n\n";

@@ -2,9 +2,9 @@
  *
  * File Name:  BinarySearchTree.cpp
  * Author: Marco Borth
- * Assignment:   EECS-268 Lab 9 Program
+ * Assignment:   EECS-560 Lab 6 – Implementation of Binary Search Trees
  * Description:  BinarySearchTree methods are defined.
- * Date: 5/3/19
+ * Date: 3/12/20
  *
  ---------------------------------------------------------------------------- */
 
@@ -85,7 +85,7 @@ void BinarySearchTree<T, K>::addRec(BinaryNode<T>* curSubTree, T entry, int dept
 }
 
 template <typename T, typename K>
-bool BinarySearchTree<T, K>::search(K key) const {
+bool BinarySearchTree<T, K>::search(K key) {
 	if(m_root != nullptr) {
     return(searchRec(key, m_root));
   } else {
@@ -94,9 +94,8 @@ bool BinarySearchTree<T, K>::search(K key) const {
 }
 
 template <typename T, typename K>
-bool BinarySearchTree<T, K>::searchRec(K key, BinaryNode<T>* curSubTree) const {
+bool BinarySearchTree<T, K>::searchRec(K key, BinaryNode<T>* curSubTree) {
 	if (key == curSubTree->getEntry()) {
-		cout << "Element " << curSubTree->getEntry() << " is found\n\n";
     return true;
 	} else if (key < curSubTree->getEntry()) {
 		if(curSubTree->getLeft() != nullptr) {
@@ -121,130 +120,172 @@ void BinarySearchTree<T, K>::clear() {
 
 template <typename T, typename K>
 void BinarySearchTree<T, K>::remove(K key) {
-	if(search(key)) {
-		if (key == m_root->getEntry()) {
-			if (m_root->getLeft() == nullptr && m_root->getRight() == nullptr) // m_root has no children.
-			{
-				BinaryNode<T>* temp = m_root;
-				m_root = nullptr;
-				temp->~BinaryNode();
-				nodeCount = 0;
-			}
-			else if (m_root->getLeft() != nullptr && m_root->getRight() == nullptr) // m_root has only left child.
-			{
-				BinaryNode<T>* temp = m_root;
-				BinaryNode<T>* leftChild = m_root->getLeft();
-	      m_root->inheritLeft(leftChild);
-	      temp->~BinaryNode();
-				nodeCount--;
-
-				/*
-				BinaryNode<T>* leftChild = curSubTree->getLeft();
-				curSubTree->~BinaryNode();
-				curSubTree = leftChild;
-				nodeCount--;
-				*/
-			}
-			else if (m_root->getLeft() == nullptr && m_root->getRight() != nullptr) // m_root has only right child.
-			{
-				BinaryNode<T>* temp = m_root;
-				BinaryNode<T>* rightChild = m_root->getRight();
-	      m_root->inheritRight(rightChild);
-	      temp->~BinaryNode();
-				nodeCount--;
-
-				/*
-				BinaryNode<T>* rightChild = curSubTree->getRight();
-				curSubTree->~BinaryNode();
-				curSubTree = rightChild;
-				nodeCount--;
-				*/
-			}
-			else // m_root has 2 children.
-			{
-				/*
-				BinaryNode<T>* rightChild = m_root->getRight();
-				minNode = minPriority(rightChild);
-				minNodeParent = minPriorityParent(rightChild);
-				BinaryNode<T>* minRightChild = minNode->getRight();
-
-				minNodeParent->setLeft(minRightChild);
-				delete minNode;
-				m_root->setEntry(minNode->getEntry());
-				nodeCount--;
-				*/
-
-				BinaryNode<T>* rightChild = m_root->getRight();
-				BinaryNode<T>* minChild = minPriority(rightChild);
-				int entry = minChild->getEntry();
-				removeRec(m_root, entry);
-				m_root->setEntry(entry);
-			}
-		} else {
-			removeRec(m_root, key);
+	if (key == m_root->getEntry()) {
+		if (m_root->getLeft() == nullptr && m_root->getRight() == nullptr) // m_root has no children.
+		{
+			m_root->~BinaryNode();
+			m_root = nullptr;
+			nodeCount = 0;
 		}
+		else if (m_root->getLeft() != nullptr && m_root->getRight() == nullptr) // m_root has only left child.
+		{
+			BinaryNode<T>* temp = m_root;
+			BinaryNode<T>* leftChild = m_root->getLeft();
+      temp->~BinaryNode();
+      m_root = leftChild;
+			nodeCount--;
+		}
+		else if (m_root->getLeft() == nullptr && m_root->getRight() != nullptr) // m_root has only right child.
+		{
+			BinaryNode<T>* temp = m_root;
+			BinaryNode<T>* rightChild = m_root->getRight();
+      temp->~BinaryNode();
+      m_root = rightChild;
+			nodeCount--;
+		}
+		else // m_root has 2 children.
+		{
+			if(m_root->getRight()->getLeft() == nullptr) {
+				BinaryNode<T>* leftChild = m_root->getLeft();
+				BinaryNode<T>* rightChild = m_root->getRight();
+				m_root->~BinaryNode();
+				m_root = rightChild;
+				m_root->inheritLeft(leftChild);
+				nodeCount--;
+			} else {
+				BinaryNode<T>* rightChild = m_root->getRight();
+				BinaryNode<T>* minNode = minPriority(rightChild);
+				BinaryNode<T>* minNodeParent = nullptr;
+				if(rightChild->getLeft()->getEntry() == minNode->getEntry()) {
+					minNodeParent = rightChild;
+				} else {
+					minNodeParent = minPriorityParent(rightChild);
+				}
+				m_root->setEntry(minNode->getEntry());
+
+				BinaryNode<T>* temp = minNodeParent->getLeft()->getRight();
+				minNodeParent->getLeft()->~BinaryNode();
+				minNodeParent->inheritLeft(temp);
+				nodeCount--;
+			}
+		}
+	}
+	else {
+		removeRec(m_root, key);
 	}
 }
 
 template <typename T, typename K>
 void BinarySearchTree<T, K>::removeRec(BinaryNode<T>* curSubTree, K key) {
 	// removeRec should only be called if remove successfully finds a BinaryNode.
-	if(key == curSubTree->getEntry()) {
-		if(curSubTree->getLeft() == nullptr && curSubTree->getRight() == nullptr) // curSubTree has no children.
-		{
-			BinaryNode<T>* temp = curSubTree;
-			curSubTree = nullptr;
-			temp->~BinaryNode();
-			nodeCount--;
-		}
-		else if(curSubTree->getLeft() != nullptr && curSubTree->getRight() == nullptr) // curSubTree has left child.
-		{
-			BinaryNode<T>* temp = m_root;
-			BinaryNode<T>* leftChild = curSubTree->getLeft();
-			curSubTree->inheritLeft(leftChild);
-			temp->~BinaryNode();
-			nodeCount--;
+	if(key < curSubTree->getEntry()) {
+    if(curSubTree->getLeft() != nullptr) {
+      if(key == curSubTree->getLeft()->getEntry()) {
+        if(curSubTree->getLeft()->getLeft() == nullptr && curSubTree->getLeft()->getRight() == nullptr) // curSubTree->getRight() has no children.
+        {
+          curSubTree->getLeft()->~BinaryNode();
+          curSubTree->inheritLeft(nullptr);
+					nodeCount--;
+        }
+        else if(curSubTree->getLeft()->getLeft() != nullptr && curSubTree->getLeft()->getRight() == nullptr) // curSubTree->getRight() has left child.
+        {
+          BinaryNode<T>* temp = curSubTree->getLeft()->getLeft();
+        	curSubTree->getLeft()->~BinaryNode();
+          curSubTree->inheritLeft(temp);
+					nodeCount--;
+        }
+        else if(curSubTree->getLeft()->getLeft() == nullptr && curSubTree->getLeft()->getRight() != nullptr) // curSubTree->getRight() has right child.
+        {
+          BinaryNode<T>* temp = curSubTree->getLeft()->getRight();
+          curSubTree->getLeft()->~BinaryNode();
+          curSubTree->inheritLeft(temp);
+					nodeCount--;
+        }
+        else // curSubTree->getRight() has 2 children.
+        {
+					if(curSubTree->getLeft()->getRight()->getLeft() == nullptr) {
+						BinaryNode<T>* leftGrandChild = curSubTree->getLeft()->getLeft();
+						BinaryNode<T>* rightGrandChild = curSubTree->getLeft()->getRight();
+	          curSubTree->getLeft()->~BinaryNode();
+	          curSubTree->inheritLeft(rightGrandChild);
+						curSubTree->getLeft()->inheritLeft(leftGrandChild);
+						nodeCount--;
+					} else {
+						BinaryNode<T>* rightGrandChild = curSubTree->getLeft()->getRight();
+						BinaryNode<T>* minNode = minPriority(rightGrandChild);
+						BinaryNode<T>* minNodeParent = nullptr;
+						if(rightGrandChild->getLeft()->getEntry() == minNode->getEntry()) {
+							minNodeParent = rightGrandChild;
+						} else {
+							minNodeParent = minPriorityParent(rightGrandChild);
+						}
+						curSubTree->getLeft()->setEntry(minNode->getEntry());
 
-			/*
-			BinaryNode<T>* leftChild = curSubTree->getLeft();
-			curSubTree->~BinaryNode();
-			curSubTree = leftChild;
-			nodeCount--;
-			*/
-		}
-		else if(curSubTree->getLeft() == nullptr && curSubTree->getRight() != nullptr) // curSubTree has right child.
-		{
-			BinaryNode<T>* temp = curSubTree;
-			BinaryNode<T>* rightChild = curSubTree->getRight();
-			curSubTree->inheritRight(rightChild);
-			temp->~BinaryNode();
-			nodeCount--;
+						BinaryNode<T>* temp = minNodeParent->getLeft()->getRight();
+	        	minNodeParent->getLeft()->~BinaryNode();
+	          minNodeParent->inheritLeft(temp);
+						nodeCount--;
+					}
+        }
+      }
+			else {
+        removeRec(curSubTree->getLeft(), key);
+      }
+    }
+  } else {
+    if(curSubTree->getRight() != nullptr) {
+      if(key == curSubTree->getRight()->getEntry()) {
+        if(curSubTree->getRight()->getRight() == nullptr && curSubTree->getRight()->getLeft() == nullptr) // curSubTree->getRight() has no children.
+        {
+          curSubTree->getRight()->~BinaryNode();
+          curSubTree->inheritRight(nullptr);
+					nodeCount--;
+        }
+        else if(curSubTree->getRight()->getRight() != nullptr && curSubTree->getRight()->getLeft() == nullptr) // curSubTree->getRight() has left child.
+        {
+          BinaryNode<T>* temp = curSubTree->getRight()->getRight();
+          curSubTree->getRight()->~BinaryNode();
+          curSubTree->inheritRight(temp);
+					nodeCount--;
+        }
+        else if(curSubTree->getRight()->getRight() == nullptr && curSubTree->getRight()->getLeft() != nullptr) // curSubTree->getRight() has right child.
+        {
+          BinaryNode<T>* temp = curSubTree->getRight()->getLeft();
+          curSubTree->getRight()->~BinaryNode();
+          curSubTree->inheritRight(temp);
+					nodeCount--;
+        }
+        else // curSubTree->getRight() has 2 children.
+        {
+					if(curSubTree->getRight()->getRight()->getLeft() == nullptr) {
+						BinaryNode<T>* leftGrandChild = curSubTree->getRight()->getLeft();
+						BinaryNode<T>* rightGrandChild = curSubTree->getRight()->getRight();
+	          curSubTree->getRight()->~BinaryNode();
+	          curSubTree->inheritRight(rightGrandChild);
+						curSubTree->getRight()->inheritLeft(leftGrandChild);
+						nodeCount--;
+					} else {
+						BinaryNode<T>* rightGrandChild = curSubTree->getRight()->getRight();
+						BinaryNode<T>* minNode = minPriority(rightGrandChild);
+						BinaryNode<T>* minNodeParent = nullptr;
+						if(rightGrandChild->getLeft()->getEntry() == minNode->getEntry()) {
+							minNodeParent = rightGrandChild;
+						} else {
+							minNodeParent = minPriorityParent(rightGrandChild);
+						}
+						curSubTree->getRight()->setEntry(minNode->getEntry());
 
-			/*
-			BinaryNode<T>* rightChild = curSubTree->getRight();
-			curSubTree->~BinaryNode();
-			curSubTree = rightChild;
-			nodeCount--;
-			*/
-		}
-		else  // curSubTree has 2 children.
-		{
-			BinaryNode<T>* rightChild = curSubTree->getRight();
-			BinaryNode<T>* minChild = minPriority(rightChild);
-			int entry = minChild->getEntry();
-			removeRec(m_root, entry);
-			curSubTree->setEntry(entry);
-			/*
-			BinaryNode<T>* rightMinChild = minChild->getRight();
-			minChild->setEntry(rightMinChild->getEntry());
-			rightMinChild->~BinaryNode();
-			nodeCount--;
-			*/
-		}
-	} else if(key < curSubTree->getEntry() && curSubTree->getLeft() != nullptr) {
-    removeRec(curSubTree->getLeft(), key);
-  } else if(key > curSubTree->getEntry() && curSubTree->getRight() != nullptr) {
-    removeRec(curSubTree->getRight(), key);
+						BinaryNode<T>* temp = minNodeParent->getLeft()->getRight();
+	        	minNodeParent->getLeft()->~BinaryNode();
+	          minNodeParent->inheritLeft(temp);
+						nodeCount--;
+					}
+        }
+      }
+			else {
+        removeRec(curSubTree->getRight(), key);
+      }
+    }
   }
 }
 
@@ -259,9 +300,7 @@ BinaryNode<T>* BinarySearchTree<T, K>::minPriority(BinaryNode<T>* curSubTree) {
 
 template<typename T, typename K>
 BinaryNode<T>* BinarySearchTree<T, K>::minPriorityParent(BinaryNode<T>* curSubTree) {
-	if(curSubTree->getLeft() == nullptr) {
-		return curSubTree;
-	} else if(curSubTree->getLeft() == minNode) {
+	if(curSubTree->getLeft()->getLeft() == nullptr) {
 		return curSubTree;
 	} else {
 		return minPriorityParent(curSubTree->getLeft());

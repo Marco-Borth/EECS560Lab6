@@ -2,9 +2,9 @@
 *
 * File Name:  BinaryNode.cpp
 * Author: Marco Borth
-* Assignment:   EECS-268 Lab 9 Program
+* Assignment:   EECS-560 Lab 6 – Implementation of Binary Search Trees
 * Description:  BinaryNode set and get methods defined here.
-* Date: 5/3/19
+* Date: 3/12/20
 *
 ---------------------------------------------------------------------------- */
 

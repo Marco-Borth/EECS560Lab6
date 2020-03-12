@@ -2,9 +2,9 @@
  *
  * File Name:  Operator.h
  * Author: Marco Borth
- * Assignment:   EECS-560 Lab 4 – Implementation of Binary Tree
+ * Assignment:   EECS-560 Lab 6 – Implementation of Binary Search Trees
  * Description:  Operator Class is defined.
- * Date: 2/22/20
+ * Date: 3/12/20
  *
  ---------------------------------------------------------------------------- */
 
